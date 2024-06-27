@@ -1,0 +1,100 @@
+{% extends "layout.html" %} {% block title %} Panel de Administración {%
+endblock %} {% block content %}
+<div class="container">
+  <h2>Panel de Administración</h2>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <h3>Lista de Usuarios</h3>
+      <a href="{{ url_for('agregar_usuario') }}" class="btn btn-primary mb-3"
+        >Agregar Usuario</a
+      >
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Admin</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if usuarios %} {% for usuario in usuarios %}
+          <tr>
+            <td>{{ usuario[1] }}</td>
+
+            <td>{{ "Sí" if usuario[3] else "No" }}</td>
+
+            <td>
+              <a
+                href="{{ url_for('editar_usuario', usuario_id=usuario[0]) }}"
+                class="btn btn-info btn-sm"
+                >Editar</a
+              >
+              <form
+                action="{{ url_for('borrar_usuario', usuario_id=usuario[0]) }}"
+                method="post"
+                style="display: inline"
+              >
+                <button type="submit" class="btn btn-danger btn-sm">
+                  Borrar
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %} {% else %}
+          <tr>
+            <td colspan="3">No hay usuarios registrados.</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-6">
+      <h3>Lista de Productos</h3>
+      <a href="{{ url_for('agregar_producto') }}" class="btn btn-primary mb-3"
+        >Agregar Producto</a
+      >
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if productos %} {% for producto in productos %}
+          <tr>
+            <td>{{ producto[1] }}</td>
+
+            <td>{{ producto[4] }}</td>
+
+            <td>
+              <a
+                href="{{ url_for('editar_producto', producto_id=producto[0]) }}"
+                class="btn btn-info btn-sm"
+                >Editar</a
+              >
+              <form
+                action="{{ url_for('borrar_producto', producto_id=producto[0]) }}"
+                method="post"
+                style="display: inline"
+              >
+                <button type="submit" class="btn btn-danger btn-sm">
+                  Borrar
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %} {% else %}
+          <tr>
+            <td colspan="3">No hay productos registrados.</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
